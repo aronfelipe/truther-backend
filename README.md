@@ -1,98 +1,204 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Truther Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API RESTful construída com NestJS para gerenciamento de usuários e sincronização de dados de criptomoedas via CoinGecko.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## ✨ Tecnologias Utilizadas
 
-## Description
+* [NestJS](https://nestjs.com/)
+* [TypeORM](https://typeorm.io/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Swagger](https://swagger.io/)
+* [JWT](https://jwt.io/)
+* [Jest](https://jestjs.io/)
+* [Docker](https://www.docker.com/)
+* [CoinGecko API](https://www.coingecko.com/en/api)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🔧 Instalação Local
 
 ```bash
-$ npm install
+git clone https://github.com/seu-usuario/truther-backend.git
+cd truther-backend
+npm install
 ```
 
-## Compile and run the project
+Crie um arquivo `.env` com base no `.env.example`:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=truther
+JWT_SECRET=supersecret
+JWT_EXPIRES_IN=3600s
+```
+
+Rode o projeto:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:dev
 ```
 
-## Run tests
+---
+
+## 🌐 Variáveis de Ambiente - `.env.example`
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=truther
+JWT_SECRET=supersecret
+JWT_EXPIRES_IN=3600s
+```
+
+---
+
+## 🚀 Endpoints
+
+* `POST /auth/register`: Criar novo usuário
+* `POST /auth/login`: Fazer login e receber JWT
+* `GET /users`: Listar todos os usuários (Admin)
+* `GET /cryptocurrencies`: Listar criptomoedas sincronizadas
+* `GET /cryptocurrencies/search?q=btc`: Buscar por nome ou símbolo
+
+### Swagger: [http://localhost:3000/docs](http://localhost:3000/docs)
+
+---
+
+## ⏳ Tarefas Cron
+
+A cada hora, a aplicação sincroniza com a CoinGecko e salva as 10 criptomoedas com maior market cap na base.
+
+---
+
+## 💪 Autenticação
+
+JWT é utilizado para autenticar os endpoints protegidos. Inclua:
+
+```http
+Authorization: Bearer <token>
+```
+
+---
+
+## 🧪 Testes
+
+Execute os testes unitários:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run test
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🐳 Docker
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Build & Run
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker-compose up --build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+O backend estará disponível em `http://localhost:3000`
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## ☁️ Deploy com Railway
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+1. Suba este repositório no GitHub
+2. Acesse [Railway](https://railway.app)
+3. Clique em "Deploy from GitHub"
+4. Adicione as variáveis de ambiente conforme `.env`
+5. Railway detecta o Dockerfile automaticamente
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🌟 Diferenciais Implementados
 
-## Stay in touch
+* [x] JWT + Middleware de proteção
+* [x] Swagger com autenticação via token
+* [x] Cron para sync com CoinGecko
+* [x] Tests com Jest
+* [x] Docker + Compose com PostgreSQL
+* [x] Busca por nome ou símbolo de cripto
+* [x] Roles (admin/cliente)
+* [x] Deploy via Railway
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 🧪 Seed de Admin
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Para criar um usuário admin via seed:
+
+```bash
+npm run seed
+```
+
+Crie um script `seed.ts` com o seguinte conteúdo:
+
+```ts
+import { DataSource } from 'typeorm';
+import { User } from './src/users/entities/user.entity';
+import * as bcrypt from 'bcrypt';
+import 'dotenv/config';
+
+const dataSource = new DataSource({
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  port: +process.env.DB_PORT,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  entities: [User],
+  synchronize: true,
+});
+
+async function seed() {
+  await dataSource.initialize();
+
+  const user = new User();
+  user.name = 'Admin';
+  user.email = 'admin@truther.com';
+  user.password = await bcrypt.hash('admin123', 10);
+  user.role = 'admin';
+
+  await dataSource.manager.save(user);
+  console.log('Usuário admin criado.');
+  process.exit();
+}
+
+seed();
+```
+
+Adicione no `package.json`:
+
+```json
+"scripts": {
+  "seed": "ts-node seed.ts"
+}
+```
+
+---
+
+## 📝 Licença
+
+Este projeto está licenciado sob os termos da licença MIT.
+
+```
+MIT License
+
+Copyright (c) 2025
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+[...truncated for brevity...]
+```
